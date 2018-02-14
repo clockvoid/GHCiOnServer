@@ -1,0 +1,24 @@
+grant {
+  //permission java.security.AllPermission;
+  permission java.io.FilePermission "<<ALL FILES>>", "read";
+  permission java.io.FilePermission "<<ALL FILES>>", "execute";
+  permission java.io.FilePermission "C:\\Users\\hiden\\AppData\\Local\\Temp\\-", "write, delete";
+  permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+  permission java.util.PropertyPermission "*", "read";
+  permission java.util.PropertyPermission "java.awt.headless", "write";
+  permission java.util.logging.LoggingPermission "control";
+  permission java.util.PropertyPermission "org.jboss.logging.provider", "write";
+  permission java.util.PropertyPermission "spring.beaninfo.ignore", "write";
+  permission java.lang.RuntimePermission "*";
+  permission java.net.SocketPermission "clock-VAIO", "resolve";
+  permission java.util.PropertyPermission "PID", "write";
+  permission java.util.PropertyPermission "catalina.*", "write";
+  permission javax.management.MBeanServerPermission "*";
+  permission javax.management.MBeanPermission "*", "*";
+  permission java.security.SecurityPermission "getPolicy";
+  permission javax.management.MBeanTrustPermission "*";
+  permission javax.security.auth.AuthPermission "doAsPrivileged";
+  permission java.net.SocketPermission "localhost:8080", "listen,resolve";
+  permission java.net.SocketPermission "[0:0:0:0:0:0:0:1]:*", "accept,resolve";
+  permission java.security.SecurityPermission "getProperty.authconfigprovider.factory";
+};
