@@ -27,12 +27,15 @@ class GHCi {
         this.initWriter()
         this.initReader()
         this.writer.use { out -> out.write(program.replace("\n$", "")); out.newLine() }
-        var str: String = ""
+        var str = ""
         val builder = StringBuilder()
         while (!Regex(".*[pP]relude.*").matches(str)) {
             str = reader.readLine()
-            if (str.equals("GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help"))str = ""
-            builder.append(str)
+            if (!Regex("^Prelude>.*").matches(str)) {
+                builder.append("")
+            } else {
+                builder.append(str)
+            }
         }
         return builder.toString()
     }
