@@ -6,12 +6,16 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(value = "/ghci")
 class GHCiController {
     val ghci = GHCi()
 
-    @RequestMapping(method = [RequestMethod.POST])
+    @RequestMapping(value = "/ghci", method = [RequestMethod.POST])
     fun ghci(@RequestBody body: Request): Result {
         return StandardResult(Result.STANDARD, ghci.submitProgram(body.program), 200)
+    }
+
+    @RequestMapping(value = "/crateSession", method = [RequestMethod.POST])
+    fun createSessoin(@RequestBody body: Request): Result {
+        return StandardResult(Result.FIRSTCONNECTION, "create a session", 200)
     }
 }
