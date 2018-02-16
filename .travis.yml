@@ -29,7 +29,7 @@ deploy:
   provider: releases
   api_key:
     secure: JS4E6gm2h6JEzFsQfuXH7s5nQ2swsLDaoipZzcCgz1Iyll38EMx8T4WpK4k36wZZK4pZ+VDRwNtf5fM26O10CMDsypIZpxwRluYG3jpWUXAB7QICTo+8qiTLuTvQI1drIZmuJaxG71FXEXT+75wnW5O6DFktuadCs704lUuZvskUvDt23AyExzMbYHAJlIM7YfL45QFezc9Dr4G3mytKJEUJhQ+Vx4E2kBLecFSqY3iVPEDbOLxMM/VwqHixULePpc1zSkn3fkADbyEMIzPoEh+ZFOimViCIUulSwYDA/xDXPWbpVntsfZ2zjusej47LxXYdOo/ZwuaWOJuUrR1YE7xSwtDhhEryw7mD+Rhwfi9sGQZH7+n41L4fzOM7DH4gC5fCxUETabT3nDHTnCU19gt8ThxdZTI36Jf1FSflpsoLoh78tIdLZ73JaV01T0XRTPlckvEr8SiBkD9V9AApuwlJ61tTvWpGLZcctNAJBA+3Vbnuk3YqGZtH9TVOVZetwUJOAgzE8VuVXBR3czFmG6u4Lyk3s2+6y58RIxa2OgZcyKC4o95FVW+AiA8gezWPEPZ6zax/5Hdov0FjwUyJs9NNOmL+c55So67oMVN6zfeKbSxdt3VU0G2pnjSLSe5HJQenUb3nwmLRJ8rbrR8/VAyzUym5c4huehiY5Glk9gY=
-  file: ./build/lib/GHCi_on_server-0.1.0.war
+  file: ./build/libs/GHCi_on_server-0.1.0.war
   skip_cleanup: true
   on:
     tags: true
