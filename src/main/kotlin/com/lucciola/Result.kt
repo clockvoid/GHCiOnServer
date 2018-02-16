@@ -1,5 +1,7 @@
 package com.lucciola
 
+import org.springframework.http.HttpStatus
+
 /**
  * Result interface describes some kind of response of the server.
  * The interface must have some properties as follows.
@@ -17,13 +19,17 @@ interface Result {
         const val FIRSTCONNECTION = 1
         const val ERROR = 2
     }
-    val status: Int
+    val status: HttpStatus
     val type: Int
     val body: String
 }
 
-data class StandardResult(override val type: Int = Result.STANDARD, override val body: String, override val status: Int) : Result
+data class StandardResult(override val type: Int = Result.STANDARD, override val body: String, override val status: HttpStatus) : Result
 
-data class FirstConnection(override val type: Int = Result.FIRSTCONNECTION, override val body: String, override val status: Int) : Result
+data class FirstConnection(override val body: String, override val status: HttpStatus) : Result {
+    override val type: Int = Result.FIRSTCONNECTION
+}
 
-data class Error(override val type: Int = Result.ERROR, override val body: String, override val status: Int) : Result
+data class ErrorResult(override val body: String, override val status: HttpStatus) : Result {
+    override val type: Int = Result.ERROR
+}

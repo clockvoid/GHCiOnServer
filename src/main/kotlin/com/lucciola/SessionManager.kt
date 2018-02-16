@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SessionManager {
-
     private var session: Map<String, GHCi> = HashMap()
 
     fun getGHCi(sessionId: String): GHCi {

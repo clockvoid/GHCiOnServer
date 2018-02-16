@@ -7,7 +7,7 @@ The Spring Boot Application for running GHCi on Tomcat Server
 This program is a Java Servlet program to run GHCi on Tomcat Server powered by Spring Boot.
 
 This program has a lot of problems especially about security. 
-DO NOT INSTALL YOUR Tomcat YET.
+DO NOT INSTALL TO YOUR Tomcat YET.
 
 ## Installation
 Building and installation is very easy. You can use Gradle.
@@ -27,19 +27,37 @@ And install your war file in `$TOMCAT_HOME/webapps`!
     The JSON must form as follows:
     ```
     {
-      "type": (Int value),
-      "sessionID": (String value describes sessionId),
+      "type": 0,
+      "sessionId": (String value describes sessionId),
       "program": (String value describes Haskell program)
     }
     ```
-    Type is request type. 0 means standard request, 1 means first connection.
-    When type is 1, the server makes session.
     
     This API returns a JSON as follows:
     ```
     {
       "type": (Int value),
-      "status": (Int value describes HTTP Status code),
-      "body": (String value describes message body)
+      "body": (String value describes message body),
+      "status": (String value describes HTTP Status)
+    }
+    ```
+    
+* `POST /createSession`
+
+    When you connect the server at the first time, you have to send JSON like:
+    ```
+    {
+       "type": 1,
+       "sessionId": (String value that is able to any value),
+       "program": (String value that is able to any value)
+    }
+    ```
+    
+    This API returns a JSON like:
+    ```
+    {
+       "type": 1,
+       "body": (String value means sessoinId),
+       "status": (String value means HTTP status)
     }
     ```

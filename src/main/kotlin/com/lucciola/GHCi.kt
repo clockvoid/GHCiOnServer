@@ -29,7 +29,7 @@ class GHCi(private val processName: String) {
         this.makeProcess()
         this.initWriter()
         this.initReader()
-        this.writer.use { out -> out.write(program.replace("\n$", "")); out.newLine() }
+        this.writer.use { out -> out.write(program.replace("\n$", "")); out.newLine(); out.write(":q"); out.newLine() }
         var str = ""
         val builder = StringBuilder()
         while (!Regex(".*[pP]relude.*").matches(str)) {

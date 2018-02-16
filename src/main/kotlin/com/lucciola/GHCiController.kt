@@ -1,11 +1,13 @@
 package com.lucciola
 
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+
+class BadRequestException(override val message: String) : RuntimeException(message)
 
 @RestController
+@RequestMapping(produces = ["application/json"])
 class GHCiController {
     private val sessionManager = SessionManager()
 
@@ -14,17 +16,26 @@ class GHCiController {
         return when (sessionManager.isEnabled(body.sessionId)) {
             true -> {
                 val message: String = sessionManager.getGHCi(body.sessionId).submitProgram(body.program)
-                StandardResult(Result.STANDARD, message, 200)
+                StandardResult(Result.STANDARD, message, HttpStatus.OK)
             }
             else -> {
-                StandardResult(Result.ERROR, "Session ID " + body.sessionId + "is diabled.", 400)
+                throw BadRequestException("SeesionID " + body.sessionId + " is disabled.")
             }
         }
     }
 
-    @RequestMapping(value = "/crateSession", method = [RequestMethod.POST])
-    fun createSessoin(@RequestBody body: Request): Result {
+    @RequestMapping(value = "/createSession", method = [RequestMethod.POST])
+    fun createSession(@RequestBody body: Request): Result {
         val hash: String = this.sessionManager.makeSession()
-        return StandardResult(Result.FIRSTCONNECTION, hash, 200)
+        return FirstConnection(hash, HttpStatus.OK)
+    }
+}
+
+@RestControllerAdvice
+class GHCiControllerExceptionHandler : ResponseEntityExceptionHandler() {
+    @ExceptionHandler(BadRequestException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun error(exception: BadRequestException): Result {
+        return ErrorResult(exception.message, HttpStatus.BAD_REQUEST)
     }
 }
