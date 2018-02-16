@@ -11,7 +11,15 @@ class GHCiController {
 
     @RequestMapping(value = "/ghci", method = [RequestMethod.POST])
     fun ghci(@RequestBody body: Request): Result {
-        return StandardResult(Result.STANDARD, sessionManager.getGHCi(body.sessionId).submitProgram(body.program), 200)
+        return when (sessionManager.isEnabled(body.sessionId)) {
+            true -> {
+                val message: String = sessionManager.getGHCi(body.sessionId).submitProgram(body.program)
+                StandardResult(Result.STANDARD, message, 200)
+            }
+            else -> {
+                StandardResult(Result.ERROR, "Session ID " + body.sessionId + "is diabled.", 400)
+            }
+        }
     }
 
     @RequestMapping(value = "/crateSession", method = [RequestMethod.POST])

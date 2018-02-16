@@ -23,6 +23,9 @@ class GHCi(private val processName: String) {
     }
 
     fun submitProgram(program: String): String {
+        if (Regex(".*writeFile.*|:i(mport)?\\sSystem.*").matches(program)) {
+            return "Invalid program!"
+        }
         this.makeProcess()
         this.initWriter()
         this.initReader()
