@@ -8,7 +8,7 @@ class GHCiTest {
 
     @Before
     fun before() {
-        ghci = GHCi()
+        ghci = GHCi("ghci")
     }
 
     @Test

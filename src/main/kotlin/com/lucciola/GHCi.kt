@@ -2,7 +2,7 @@ package com.lucciola
 
 import java.io.*
 
-class GHCi {
+class GHCi(private val processName: String) {
     lateinit var process: Process
         private set
     lateinit var reader: BufferedReader
@@ -11,7 +11,7 @@ class GHCi {
         private set
 
     private fun makeProcess() {
-        this.process = ProcessBuilder("ghci").start()
+        this.process = ProcessBuilder(processName).start()
     }
 
     private fun initWriter() {
