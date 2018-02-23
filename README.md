@@ -3,6 +3,8 @@
 
 The Spring Boot Application for running GHCi on Tomcat Server
 
+It works on `35.185.191.217/GHCi_on_server`!
+
 ## Description
 This program is a Java Servlet program to run GHCi on Tomcat Server powered by Spring Boot.
 
