@@ -4,8 +4,10 @@ import java.security.MessageDigest
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import org.apache.commons.lang3.SystemUtils
+import javax.servlet.http.HttpServlet
 
-class SessionManager {
+class SessionManager : HttpServlet() {
     private var session: Map<String, GHCi> = HashMap()
 
     fun getGHCi(sessionId: String): GHCi {
@@ -27,7 +29,11 @@ class SessionManager {
     }
 
     fun makeSession(): String {
-        val ghci = GHCi("ghci")
+        val command: String = when {
+            SystemUtils.IS_OS_LINUX -> "/usr/bin/ghci"
+            else -> "ghci"
+        }
+        val ghci = GHCi(command)
         val hash: String = makeHash()
         this.session += hashMapOf(hash to ghci)
         return hash

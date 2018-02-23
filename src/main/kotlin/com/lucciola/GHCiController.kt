@@ -31,11 +31,17 @@ class GHCiController {
     }
 }
 
-@RestControllerAdvice
+@RestController
 class GHCiControllerExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler(BadRequestException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun error(exception: BadRequestException): Result {
         return ErrorResult(exception.message, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(Exception::class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    fun allOfError(exception: Exception): Result {
+        return ErrorResult(exception.stackTrace.toString(), HttpStatus.INTERNAL_SERVER_ERROR)
     }
 }
