@@ -44,7 +44,7 @@ And install your war file in `$TOMCAT_HOME/webapps`!
     }
     ```
     
-* `GET /createSession`
+* `GET /create_session`
 
     When you connect the server at the first time, you have to send `GET /createSession`
     

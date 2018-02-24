@@ -23,7 +23,7 @@ class GHCiController {
         }
     }
 
-    @RequestMapping(value = "/createSession", method = [RequestMethod.GET])
+    @RequestMapping(value = "/create_session", method = [RequestMethod.GET])
     fun createSession(): Result {
         val hash: String = this.sessionManager.makeSession()
         return FirstConnection(hash, HttpStatus.OK)
