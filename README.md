@@ -44,16 +44,9 @@ And install your war file in `$TOMCAT_HOME/webapps`!
     }
     ```
     
-* `POST /createSession`
+* `GET /createSession`
 
-    When you connect the server at the first time, you have to send JSON like:
-    ```
-    {
-       "type": 1,
-       "sessionId": (String value that is able to any value),
-       "program": (String value that is able to any value)
-    }
-    ```
+    When you connect the server at the first time, you have to send `GET /createSession`
     
     This API returns a JSON like:
     ```

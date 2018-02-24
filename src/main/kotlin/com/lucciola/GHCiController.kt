@@ -7,11 +7,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 class BadRequestException(override val message: String) : RuntimeException(message)
 
 @RestController
-@RequestMapping(produces = ["application/json"])
 class GHCiController {
     private val sessionManager = SessionManager()
 
-    @RequestMapping(value = "/ghci", method = [RequestMethod.POST])
+    @RequestMapping(value = "/ghci", method = [RequestMethod.POST], produces = ["application/json"])
     fun ghci(@RequestBody body: Request): Result {
         return when (sessionManager.isEnabled(body.sessionId)) {
             true -> {
@@ -19,29 +18,29 @@ class GHCiController {
                 StandardResult(Result.STANDARD, message, HttpStatus.OK)
             }
             else -> {
-                throw BadRequestException("SeesionID " + body.sessionId + " is disabled.")
+                throw BadRequestException("SeessionID " + body.sessionId + " is disabled.")
             }
         }
     }
 
-    @RequestMapping(value = "/createSession", method = [RequestMethod.POST])
-    fun createSession(@RequestBody body: Request): Result {
+    @RequestMapping(value = "/createSession", method = [RequestMethod.GET])
+    fun createSession(): Result {
         val hash: String = this.sessionManager.makeSession()
         return FirstConnection(hash, HttpStatus.OK)
     }
 }
 
-@RestController
+@RestControllerAdvice
 class GHCiControllerExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler(BadRequestException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun error(exception: BadRequestException): Result {
+    fun handleBadRequestException(exception: BadRequestException): Result {
         return ErrorResult(exception.message, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun allOfError(exception: Exception): Result {
+    fun handleAllError(exception: Exception): Result {
         return ErrorResult(exception.stackTrace.toString(), HttpStatus.INTERNAL_SERVER_ERROR)
     }
 }
