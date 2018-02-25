@@ -5,17 +5,30 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import org.apache.commons.lang3.SystemUtils
+import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServlet
 
+@Service
 class SessionManager : HttpServlet() {
-    private var session: Map<String, GHCi> = HashMap()
+    private var sessions: Map<String, GHCi> = HashMap()
 
-    fun getGHCi(sessionId: String): GHCi {
-        return session[sessionId]!!
+    fun postProgram(type: RequestType, sessionId: String, program: String): String {
+        return when (this.isEnabled(sessionId)) {
+            true -> {
+                this.getGHCi(sessionId).submitProgram(program)
+            }
+            else -> {
+                throw BadRequestException("SeessionID $sessionId is disabled.")
+            }
+        }
     }
 
-    fun isEnabled(sessionId: String): Boolean {
-        return when (session[sessionId]) {
+    private fun getGHCi(sessionId: String): GHCi {
+        return sessions[sessionId]!!
+    }
+
+    private fun isEnabled(sessionId: String): Boolean {
+        return when (sessions[sessionId]) {
             null -> false
             else -> true
         }
@@ -35,7 +48,7 @@ class SessionManager : HttpServlet() {
         }
         val ghci = GHCi(command)
         val hash: String = makeHash()
-        this.session += hashMapOf(hash to ghci)
+        this.sessions += hashMapOf(hash to ghci)
         return hash
     }
 }

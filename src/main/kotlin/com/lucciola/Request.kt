@@ -1,8 +1,9 @@
 package com.lucciola
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 enum class RequestType(val rawvalue: String) {
-    STANDARD("standard"),
-    FIRSTCONNECTION("first_connection")
+    STANDARD("standard")
 }
 
 /**
@@ -14,8 +15,11 @@ enum class RequestType(val rawvalue: String) {
  * @property program describes programs
  */
 class Request {
+    @JsonProperty("type")
     lateinit var type: RequestType
+    @JsonProperty("sessionId")
     lateinit var sessionId: String
+    @JsonProperty("program")
     lateinit var program: String
 }
 

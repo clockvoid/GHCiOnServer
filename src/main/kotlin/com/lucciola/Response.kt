@@ -19,17 +19,17 @@ interface Result {
         const val FIRSTCONNECTION = 1
         const val ERROR = 2
     }
-    val status: HttpStatus
+    val status: Int
     val type: Int
     val body: String
 }
 
-data class StandardResult(override val type: Int = Result.STANDARD, override val body: String, override val status: HttpStatus) : Result
+data class StandardResult(override val type: Int = Result.STANDARD, override val body: String, override val status: Int) : Result
 
-data class FirstConnection(override val body: String, override val status: HttpStatus) : Result {
+data class FirstConnection(override val body: String, override val status: Int) : Result {
     override val type: Int = Result.FIRSTCONNECTION
 }
 
-data class ErrorResult(override val body: String, val exception: String, override val status: HttpStatus) : Result {
+data class ErrorResult(override val body: String, val exception: String, override val status: Int) : Result {
     override val type: Int = Result.ERROR
 }

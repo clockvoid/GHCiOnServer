@@ -21,4 +21,5 @@ grant {
   permission java.net.SocketPermission "localhost:8080", "listen,resolve";
   permission java.net.SocketPermission "[0:0:0:0:0:0:0:1]:*", "accept,resolve";
   permission java.security.SecurityPermission "getProperty.authconfigprovider.factory";
+  permission java.net.SocketPermission "127.0.0.1:*", "accept,resolve";
 };
