@@ -3,7 +3,7 @@ import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class SessionManagementTest {
+class SessionManagerTest {
     lateinit var sessionManager: SessionManager
 
     @Before
