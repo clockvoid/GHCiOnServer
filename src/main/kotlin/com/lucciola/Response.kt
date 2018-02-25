@@ -30,6 +30,6 @@ data class FirstConnection(override val body: String, override val status: HttpS
     override val type: Int = Result.FIRSTCONNECTION
 }
 
-data class ErrorResult(override val body: String, override val status: HttpStatus) : Result {
+data class ErrorResult(override val body: String, val exception: String, override val status: HttpStatus) : Result {
     override val type: Int = Result.ERROR
 }
