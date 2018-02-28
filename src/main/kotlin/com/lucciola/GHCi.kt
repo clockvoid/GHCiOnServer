@@ -23,7 +23,7 @@ class GHCi(private val processName: String) {
     }
 
     fun submitProgram(program: String): String {
-        if (Regex(".*writeFile.*|:i(mport)?\\sSystem.*").matches(program)) {
+        if ("(^:(?!m(odule)?).*)|(.*readFile.*)|(^:m(odule)?\\sSystem.*)".toRegex().matches(program)) {
             return "Invalid program!"
         }
         this.makeProcess()

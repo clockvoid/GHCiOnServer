@@ -15,7 +15,7 @@ class GHCiTest {
     fun submitProgramTest() {
         val str1: String = ghci.submitProgram("putStrLn \"test\"")
         val str2: String = ghci.submitProgram("putStrLn \"test\"")
-        val invalid: String = ghci.submitProgram(":i System.Cmd")
+        val invalid: String = ghci.submitProgram(":m System.Cmd")
         assertEquals("Prelude> test", str1)
         assertEquals("Prelude> test", str2)
         assertEquals("Invalid program!", invalid)
