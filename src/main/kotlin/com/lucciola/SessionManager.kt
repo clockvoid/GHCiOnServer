@@ -13,18 +13,14 @@ class SessionManager : HttpServlet() {
     private var sessions: Map<String, GHCi> = HashMap()
 
     fun postProgram(type: RequestType, sessionId: String, program: String): String {
-        return when (this.isEnabled(sessionId)) {
-            true -> {
-                this.getGHCi(sessionId).submitProgram(program)
-            }
-            else -> {
-                throw BadRequestException("SeessionID $sessionId is disabled.")
-            }
-        }
+        return this.getGHCi(sessionId).submitProgram(program)
     }
 
     fun getGHCi(sessionId: String): GHCi {
-        return sessions[sessionId]!!
+        return when (this.isEnabled(sessionId)) {
+            true -> sessions[sessionId]!!
+            else -> throw BadRequestException("SessionID $sessionId is disabled.")
+        }
     }
 
     private fun isEnabled(sessionId: String): Boolean {
