@@ -11,6 +11,7 @@ class GHCi(private val processName: String) {
         private set
     var functions: Array<String> = arrayOf()
     private val functionRegex: Regex = "^let .*".toRegex()
+    private val invalidProgramRegex: Regex = "(^:(?!m(odule)?).*)|(.*readFile.*)|(^:m(odule)?\\sSystem.*)".toRegex()
 
     private fun makeProcess() {
         this.process = ProcessBuilder(processName).start()
@@ -25,16 +26,19 @@ class GHCi(private val processName: String) {
     }
 
     fun submitProgram(program: String): String {
-        if ("(^:(?!m(odule)?).*)|(.*readFile.*)|(^:m(odule)?\\sSystem.*)".toRegex().matches(program)) {
-            return "Invalid program!"
-        }
-        if (this.functionRegex.matches(program)) {
-            addFunction(program)
+        when {
+            this.invalidProgramRegex.matches(program) -> return "Invalid Program!"
+            this.functionRegex.matches(program) -> addFunction(program)
         }
         this.makeProcess()
         this.initWriter()
         this.initReader()
-        this.writer.use { out -> out.write(program.replace("\n$", "")); out.newLine(); out.write(":q"); out.newLine() }
+        this.writer.use { out ->
+            out.write(program.replace("\n$", ""))
+            out.newLine()
+            out.write(":q")
+            out.newLine()
+        }
         var str = ""
         val builder = StringBuilder()
         while (!Regex(".*[pP]relude.*").matches(str)) {
