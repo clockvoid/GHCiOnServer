@@ -9,6 +9,8 @@ class GHCi(private val processName: String) {
         private set
     lateinit var writer: BufferedWriter
         private set
+    var functions: Array<String> = arrayOf()
+    private val functionRegex: Regex = "^let .*".toRegex()
 
     private fun makeProcess() {
         this.process = ProcessBuilder(processName).start()
@@ -26,6 +28,9 @@ class GHCi(private val processName: String) {
         if ("(^:(?!m(odule)?).*)|(.*readFile.*)|(^:m(odule)?\\sSystem.*)".toRegex().matches(program)) {
             return "Invalid program!"
         }
+        if (this.functionRegex.matches(program)) {
+            addFunction(program)
+        }
         this.makeProcess()
         this.initWriter()
         this.initReader()
@@ -41,5 +46,17 @@ class GHCi(private val processName: String) {
             }
         }
         return builder.toString()
+    }
+
+    fun getFunctions(): String {
+        val result = StringBuilder()
+        for (str in this.functions) {
+            result.append(str)
+        }
+        return result.toString()
+    }
+
+    fun addFunction(arg0: String) {
+        this.functions = this.functions + arrayOf(arg0)
     }
 }

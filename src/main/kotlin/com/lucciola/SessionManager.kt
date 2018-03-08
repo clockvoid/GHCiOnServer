@@ -23,7 +23,7 @@ class SessionManager : HttpServlet() {
         }
     }
 
-    private fun getGHCi(sessionId: String): GHCi {
+    fun getGHCi(sessionId: String): GHCi {
         return sessions[sessionId]!!
     }
 

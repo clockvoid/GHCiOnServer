@@ -22,5 +22,11 @@ class GHCiController {
         val hash: String = this.sessionManager.makeSession()
         return FirstConnection(hash, HttpStatus.OK.value())
     }
+
+    @RequestMapping(value = "/get_functions", method = [RequestMethod.POST], produces = ["application/json"])
+    fun getFunctions(@RequestBody body: Request): Result {
+        val functions: String = this.sessionManager.getGHCi(body.sessionId).getFunctions()
+        return StandardResult(Result.STANDARD, functions, HttpStatus.OK.value())
+    }
 }
 
