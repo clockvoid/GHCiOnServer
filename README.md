@@ -44,6 +44,12 @@ And install your war file in `$TOMCAT_HOME/webapps`!
     }
     ```
     
+* `POST /get_functions`
+
+    This service has a functions to save functions.
+    In program, you can use `let` keyword to register functions.
+    To get these functions, this API is pretty better.
+
 * `GET /create_session`
 
     When you connect the server at the first time, you have to send `GET /createSession`

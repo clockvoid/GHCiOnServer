@@ -20,4 +20,10 @@ class GHCiTest {
         assertEquals("Prelude> test", str2)
         assertEquals("Invalid program!", invalid)
     }
+
+    @Test
+    fun getFunctionsTest() {
+        this.ghci.addFunction("hello")
+        assertEquals("hello", this.ghci.getFunctions())
+    }
 }
