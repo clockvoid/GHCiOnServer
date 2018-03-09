@@ -1,5 +1,5 @@
 import com.lucciola.GHCi
-import junit.framework.Assert.assertEquals
+import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -18,7 +18,7 @@ class GHCiTest {
         val invalid: String = ghci.submitProgram(":m System.Cmd")
         assertEquals("Prelude> test", str1)
         assertEquals("Prelude> test", str2)
-        assertEquals("Invalid program!", invalid)
+        assertEquals("Invalid Program!", invalid)
     }
 
     @Test
