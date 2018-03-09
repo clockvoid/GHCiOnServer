@@ -12,18 +12,18 @@ class GHCiController {
     @Autowired
     private lateinit var sessionManager: SessionManager
 
-    @RequestMapping(value = "/ghci", method = [RequestMethod.POST], produces = ["application/json"])
+    @RequestMapping(value = ["/ghci"], method = [RequestMethod.POST], produces = ["application/json"])
     fun ghci(@RequestBody body: Request): Result {
         return StandardResult(Result.STANDARD, this.sessionManager.postProgram(body.type, body.sessionId, body.program), HttpStatus.OK.value())
     }
 
-    @RequestMapping(value = "/create_session", method = [RequestMethod.GET])
+    @RequestMapping(value = ["/create_session"], method = [RequestMethod.GET])
     fun createSession(): Result {
         val hash: String = this.sessionManager.makeSession()
         return FirstConnection(hash, HttpStatus.OK.value())
     }
 
-    @RequestMapping(value = "/get_functions", method = [RequestMethod.POST], produces = ["application/json"])
+    @RequestMapping(value = ["/get_functions"], method = [RequestMethod.POST], produces = ["application/json"])
     fun getFunctions(@RequestBody body: Request): Result {
         val functions: String = this.sessionManager.getGHCi(body.sessionId).getFunctions()
         return StandardResult(Result.STANDARD, functions, HttpStatus.OK.value())

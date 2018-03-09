@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest
 class GHCiControllerExceptionHandler {
     @ExceptionHandler(BadRequestException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleBadRequestException(exception: BadRequestException, request: WebRequest): Result {
+    fun handleBadRequestException(exception: BadRequestException): Result {
         return ErrorResult(exception.message, exception.toString(), HttpStatus.BAD_REQUEST.value())
     }
 }
