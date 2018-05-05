@@ -22,7 +22,7 @@ cd GHCiOnServer
 
 And install your war file in `$TOMCAT_HOME/webapps`!
 
-## REST APIs
+## APIs
 * `POST /ghci`
 
     You can send JSON describing programs in request body.
